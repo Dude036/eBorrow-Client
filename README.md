@@ -1,4 +1,4 @@
-# eBorrow
+# eBorrow - Client
 
 This project is an Inventory Catalog designed as a desktop application using Python 3. The Project is split into two distinct systems. A Client application and a Server Application. This README is designed to assist in understanding the high level structure of the project.
 
