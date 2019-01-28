@@ -1,17 +1,20 @@
-# Project Title
+# eBorrow
 
 This project is an Inventory Catalog designed as a desktop application using Python 3. The Project is split into two distinct systems. A Client application and a Server Application. This README is designed to assist in understanding the high level structure of the project.
 
 ## Getting Started
 
-This repository contains the following Documents:
+Setting up the repository is still in progress. The eventual goal is to allow for an executable install using pyinstaller. In the meantime, we will be running the files as python scripts. We are currently developing on Python 3.5+, and pip3 18.1+. Once you have those installed, run the folling command to install all requirements of this project.
 
-1. Requirements Documentation
-	* Description goes here
-2. Project Plan
-	* Description goes here
-3. Case Diagrams
-	* Description goes here
+```
+pip3 install -r requirements.txt
+```
+
+**Windows Users** Be aware that this may require you to add the argument "--user". You may want to install the requirements as an administrator, but adding the argument will work as well.
+
+### Netcode
+
+Coming Soon!
 
 ### Coding Style
 
@@ -22,7 +25,7 @@ This runs a verbose call to autopep8 for all Python files in the folder to fix a
 ```
 autopep8 -v -i *.py
 ```
-Run this command before every push.
+Run this command before every push to keep coding style consistancy.
 
 ## Contributing & Versioning
 
@@ -40,12 +43,14 @@ We use GitHub's versioning system. The *master* branch is to remain untouched un
 10. Run styling script
 11. Submit Final Pull request for review
 
-## Authors
+We welcome assistance in the project, but not following the above protocol will result in a rejected pull request. If you want to find a bug, please check the issuses page for possible jumping off points.
 
-* **Joshua Higham** - Role
-* **Caleb Lundquist** - Role
-* **Tim Weber** - Role
-* **Jordan Yates** - Role
+## Authors (sorted alphabetically)
+
+* **Joshua Higham** - Backend/Networking/Security/Database
+* **Caleb Lundquist** - Frontend/Networking
+* **Tim Weber** - Backend/Networking/Security
+* **Jordan Yates** - Frontend/GUI/Security
 
 ## License
 
