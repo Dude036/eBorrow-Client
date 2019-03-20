@@ -1,4 +1,4 @@
-function createAndAddItem(jsonItem)
+function createItem(jsonItem)
 {
     var itemWrapper = document.createElement('div');
     itemWrapper.setAttribute('class', 'item-wrapper');
@@ -44,7 +44,7 @@ function createAndAddItem(jsonItem)
     itemWrapper.appendChild(itemWrapperLeft);
     itemWrapper.appendChild(itemWrapperRight);
     itemWrapper.onclick = () => console.log(jsonItem);
-    document.querySelector('body').appendChild(itemWrapper);
+    return itemWrapper;
 }
 
 function loadJSON(callback) {
@@ -60,9 +60,13 @@ function loadJSON(callback) {
 }
 loadJSON(function (response) {
     jsonresponse = JSON.parse(response);
+    var itemsContainer = document.createElement('div');
+    itemsContainer.setAttribute('class', 'items-container');
     for (var prop in jsonresponse) {
         if (jsonresponse.hasOwnProperty(prop)) {
-            createAndAddItem(jsonresponse[prop]);
+            item = createItem(jsonresponse[prop]);
+            itemsContainer.appendChild(item);
         }
     }
+    document.querySelector('body').appendChild(itemsContainer);
 });

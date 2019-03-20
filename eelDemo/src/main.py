@@ -25,7 +25,7 @@ def getJson():
     return items
 
 
-eel.start('hello.html', block=False)
+eel.start('html/hello.html', block=False)
 
 while True:
     eel.sleep(10)

@@ -1,12 +1,8 @@
-body {
-    height: 100vh;
-    width: 100vw;
+.items-container {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
 }
-
-.header {
-    color: rgb(206, 16, 22);
-}
-
 .item-wrapper {
     border: 1px solid black;
     margin: 10px;
@@ -14,6 +10,8 @@ body {
     display: flex;
     width: 500px;
     height: 150px;
+    border-radius: 3px;
+    background-color: #5680e97e;
 }
 .item-wrapper:hover {
     cursor: pointer;
@@ -32,7 +30,7 @@ body {
 .item-wrapper-left {
     width: 150px;
     height: 150px;
-    background-color: lightgray;
+    background-color: #c1c8e4;
 }
 .item-title {
     width: 100%;
@@ -48,12 +46,6 @@ body {
     height: auto;
     margin: auto;
     display: block;
-}
-.item-category {
-    
-}
-.item-owner {
-    
 }
 .item-available {
     position: absolute;

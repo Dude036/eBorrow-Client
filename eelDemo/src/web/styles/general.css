@@ -1,0 +1,16 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 100px 1fr;
+    font-family: 'Raleway', sans-serif;
+    background-image: linear-gradient(to bottom right, #5abaeab6, #8760d0ab);
+    background-attachment: fixed;
+    color: #f0f5f8;
+}
+
+.header {
+    color: rgb(206, 16, 22);
+}
+
