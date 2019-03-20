@@ -14,7 +14,7 @@ def getTime():
 def getJson():
     items = ''
 
-    with open('mystuff.json', 'r') as f:
+    with open('web/database/mystuff.json', 'r') as f:
         mystuff_dict = json.load(f)
 
     for mystuff in mystuff_dict:
@@ -25,7 +25,7 @@ def getJson():
     return items
 
 
-eel.start('hello.html', block=False)
+eel.start('html/hello.html', block=False)
 
 while True:
     eel.sleep(10)

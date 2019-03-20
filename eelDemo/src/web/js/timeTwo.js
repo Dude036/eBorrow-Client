@@ -17,7 +17,19 @@ document.querySelector('body').appendChild(jsonButton);
 
 async function jsonGetter(){
     let value = await eel.getJson()();
-    var theJson = document.createElement('p');
+    var theJson = document.createElement('div');
     theJson.textContent = value;
     document.querySelector('body').appendChild(theJson);
+
+    $.getJSON("../database/mystuff.json", function (data) {
+        var items = [];
+        $.each(data, function (key, val) {
+            items.push("<li id='" + key + "'>" + val + "</li>");
+        });
+
+        $("<ul/>", {
+            "class": "my-new-list",
+            html: items.join("")
+        }).appendTo("body");
+    });
 };

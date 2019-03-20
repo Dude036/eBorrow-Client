@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello, World!</title>
+    <script type="text/javascript" src="/eel.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/general.css">
+    <link rel="stylesheet" type="text/css" href="../styles/header.css">
+    <link rel="stylesheet" type="text/css" href="../styles/item.css">
+    <link rel="stylesheet" type="text/css" href="../styles/sideMenu.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script>
+      async function getTime(){
+        let value = await eel.getTime()();
+        alert(value);
+      };
+    </script>
+  </head>
+
+  <body>
+    <script src="../js/header.js"></script>
+    <script src="../js/sideMenu.js"></script>
+    <script src="../js/jsonReader.js"></script>
+  </body>
+</html>
