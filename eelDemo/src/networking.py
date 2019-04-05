@@ -1,6 +1,7 @@
 import socket
 import time
 from keys import generate_keys
+import simplejson as json
 
 
 # Networking Info
@@ -49,20 +50,3 @@ def send(send_buffer):
         response = recv_until(s)
         s.close()
     return response
-
-
-if __name__ == '__main__':
-    private_key, public_key = generate_keys()
-    header = '@' + 'my_user_name' + ':0'
-    packet = "{\"private\":\"" + private_key.decode() + "\", \"public\":\"" + public_key.decode() + "\"}"
-    message = send([header + ' ' + packet])
-
-    print("create user: ")
-    print(message)
-
-    header = '@' + 'my_user_name' + ':1'
-    packet = "{\"Delete\":1, \"public\":\"" + public_key.decode() + "\", \"private\":\"" + private_key.decode() + "\"}"
-    message = send([header + ' ' + packet])
-
-    print("delete user: ")
-    print(message)
