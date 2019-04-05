@@ -1,4 +1,5 @@
 from OpenSSL import crypto
+import hashlib
 
 
 def generate_keys():
@@ -8,13 +9,8 @@ def generate_keys():
         crypto.FILETYPE_PEM, k).decode().split('\n')[1:-2]).encode()
     public_key = ''.join(crypto.dump_publickey(
         crypto.FILETYPE_PEM, k).decode().split('\n')[1:-2]).encode()
-
-    # Need to decide how to save keys
-    # pri = open("my private.txt", "a")
-    # pri.write(private_key.decode())
-    # pri.close()
-    # pub = open("my public.txt", "a")
-    # pub.write(public_key.decode())
-    # pub.close()
-
     return private_key, public_key
+
+
+def create_item_key(item):
+    return hashlib.md5(str(item["Permanent Owner"] + item["Category"] + item["Subcategory"] + item["Name"]).encode()).hexdigest()

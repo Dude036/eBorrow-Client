@@ -1,8 +1,6 @@
 import eel
 import time
 import json
-from networking import send
-from keys import generate_keys
 
 eel.init('web')
 

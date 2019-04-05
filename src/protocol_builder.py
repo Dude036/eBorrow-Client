@@ -1,7 +1,8 @@
 import eel
 from networking import send
-from keys import generate_keys
+from keys import generate_keys, create_item_key
 from user_info import get_user_info
+import simplejson as json
 
 
 @eel.expose
@@ -43,23 +44,46 @@ def new_user(user_name):
 @eel.expose
 def delete_user():
     # Protocol 1
-    user_name, priv, pub = get_user_info()
+    user_name, priv_key, pub_key = get_user_info()
     header = '@' + user_name + ':1'
-    packet = "{\"Delete\":1, \"public\":\""+pub+"\", \"private\":\""+priv+"\"}"
+    packet = "{\"Delete\":1, \"public\":\""+pub_key+"\", \"private\":\""+priv_key+"\"}"
     message = send([header + ' ' + packet])
     print(message)
 
 
 @eel.expose
-def delete_item():
+def delete_item(item_key):
     # Protocol 2
+    user_name, priv_key, pub_key = get_user_info()
+    header = '@' + user_name + ':2'
+    packet = "{\"Key\":\"[" + item_key + "]\", \"private\":\"" + priv_key + "\"}"
+    message = send([header + ' ' + packet])
+    print(message)
     return 'I delete items from your database'
 
 
 @eel.expose
-def add_item():
+def add_item(item_name, category, subcategory, other_info):
     # Protocol 3
-    return 'I add item(s) to your database'
+    user_name, priv_key, pub_key = get_user_info()
+    item = {
+        "Current Owner": user_name,
+        "Permanent Owner": user_name,
+        "Category": category,
+        "Subcategory": subcategory,
+        "Name": item_name,
+        "Groups": [],
+        "Type Info": {},
+        "Image": '',
+        "User Tags": [],
+    }
+    item_key = create_item_key(item)
+
+    header = '@' + user_name + ':3'
+    packet = "{\"" + item_key + "\":" + json.dumps(item) + ", \"private\":\"" + priv_key + "\"}"
+    message = send([header + ' ' + packet])
+    print(message)
+    return item_key
 
 
 # Primarily called to initialize local database
@@ -76,7 +100,7 @@ def send_some():
 
 
 @eel.expose
-def loan_return():
+def change_owner():
     # Protocol 6
     return 'I change current owner'
 
@@ -137,5 +161,6 @@ def return_exchanges():
 
 if __name__ == '__main__':
     new_user('user1')
+    key = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')
+    delete_item(key)
     delete_user()
-

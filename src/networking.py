@@ -1,7 +1,5 @@
 import socket
 import time
-from keys import generate_keys
-import simplejson as json
 
 
 # Networking Info
