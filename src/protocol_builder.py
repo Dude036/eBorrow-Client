@@ -1,6 +1,7 @@
 import eel
 from networking import send
 from keys import generate_keys
+from user_info import get_user_info
 
 
 @eel.expose
@@ -10,7 +11,7 @@ def new_user(user_name):
     header = '@' + user_name + ':0'
     priv_key = priv.decode()
     pub_key = pub.decode()
-    packet = "{\"private\":\"" + priv_key + "\", \"public\":\"" + pub_key + "\"}"
+    packet = "{\"private\":\""+priv_key+"\", \"public\":\""+pub_key+"\"}"
     message = send([header + ' ' + packet])
     print(message)
     if '16' not in message:
@@ -42,17 +43,9 @@ def new_user(user_name):
 @eel.expose
 def delete_user():
     # Protocol 1
-    f = open("username.txt", "r")
-    user_name = f.read()
-    f.close()
-    f = open("private.txt", "r")
-    priv = f.read()
-    f.close()
-    f = open("public.txt", "r")
-    pub = f.read()
-    f.close()
+    user_name, priv, pub = get_user_info()
     header = '@' + user_name + ':1'
-    packet = "{\"Delete\": 1, \"public\":\""+pub+"\", \"private\":\""+priv+"\"}"
+    packet = "{\"Delete\":1, \"public\":\""+pub+"\", \"private\":\""+priv+"\"}"
     message = send([header + ' ' + packet])
     print(message)
 
