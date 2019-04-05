@@ -5,6 +5,7 @@ from keys import generate_keys
 
 @eel.expose
 def new_user(user_name):
+    # Protocol 0
     priv, pub = generate_keys()
     header = '@' + user_name + ':0'
     priv_key = priv.decode()
@@ -40,6 +41,7 @@ def new_user(user_name):
 
 @eel.expose
 def delete_user():
+    # Protocol 1
     f = open("username.txt", "r")
     user_name = f.read()
     f.close()
@@ -56,17 +58,88 @@ def delete_user():
 
 
 @eel.expose
-def log_in():
-    name = open("username")
-    user_name = name.read()
-    name.close()
-    key = open("keys.txt", "r")
-    private_key = key.read()
-    key.close()
+def delete_item():
+    # Protocol 2
+    return 'I delete items from your database'
 
-    header = '@' + user_name + ':4'
 
-    return
+@eel.expose
+def add_item():
+    # Protocol 3
+    return 'I add item(s) to your database'
+
+
+# Primarily called to initialize local database
+@eel.expose
+def send_all():
+    # Protocol 4
+    return 'I get you all of your stuff and your friends'
+
+
+@eel.expose
+def send_some():
+    # Protocol 5
+    return 'I get you specific information'
+
+
+@eel.expose
+def loan_return():
+    # Protocol 6
+    return 'I change current owner'
+
+
+@eel.expose
+def send_message():
+    # Protocol 7
+    return 'I send a message'
+
+
+@eel.expose
+def send_exchange():
+    # Protocol 8
+    return 'I send exchanges'
+
+
+@eel.expose
+def item_request():
+    # Protocol 100
+    return 'I request items'
+
+
+@eel.expose
+def friend_request():
+    # Protocol 101
+    return 'I request friends'
+
+
+@eel.expose
+def add_friend():
+    # Protocol 102
+    return 'I accept friend requests'
+
+
+@eel.expose
+def delete_friend():
+    # Protocol 103
+    return 'I delete friends'
+
+
+@eel.expose
+def return_items():
+    # Protocol 200
+    return 'I return items to their owners'
+
+
+@eel.expose
+def return_messages():
+    # Protocol 201
+    return 'I reply to messages'
+
+
+@eel.expose
+def return_exchanges():
+    # Protocol 202
+    return 'I do something'
 
 
 if __name__ == '__main__':
