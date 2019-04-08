@@ -7,12 +7,13 @@ import simplejson as json
 
 @eel.expose
 def new_user(user_name):
+    # TODO don't let this run if there is already a user on the machine
     # Protocol 0
     priv, pub = generate_keys()
     header = '@' + user_name + ':0'
     priv_key = priv.decode()
     pub_key = pub.decode()
-    packet = "{\"private\":\""+priv_key+"\", \"public\":\""+pub_key+"\"}"
+    packet = json.dumps({"private": priv_key, "public": pub_key})
     message = send([header + ' ' + packet])
     print(message)
     if '16' not in message:
@@ -46,7 +47,7 @@ def delete_user():
     # Protocol 1
     user_name, priv_key, pub_key = get_user_info()
     header = '@' + user_name + ':1'
-    packet = "{\"Delete\":1, \"public\":\""+pub_key+"\", \"private\":\""+priv_key+"\"}"
+    packet = json.dumps({"Delete": 1, "public": pub_key, "private": priv_key})
     message = send([header + ' ' + packet])
     print(message)
 
@@ -56,7 +57,7 @@ def delete_item(item_key):
     # Protocol 2
     user_name, priv_key, pub_key = get_user_info()
     header = '@' + user_name + ':2'
-    packet = "{\"Key\":\"[" + item_key + "]\", \"private\":\"" + priv_key + "\"}"
+    packet = json.dumps({"Key": [item_key], "private": priv_key})
     message = send([header + ' ' + packet])
     print(message)
     return 'I delete items from your database'
@@ -80,7 +81,7 @@ def add_item(item_name, category, subcategory, other_info):
     item_key = create_item_key(item)
 
     header = '@' + user_name + ':3'
-    packet = "{\"" + item_key + "\":" + json.dumps(item) + ", \"private\":\"" + priv_key + "\"}"
+    packet = json.dumps({item_key: item, "private": priv_key})
     message = send([header + ' ' + packet])
     print(message)
     return item_key
