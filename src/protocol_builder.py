@@ -1,13 +1,15 @@
 import eel
+import os
 from networking import send
 from keys import generate_keys, create_item_key
-from user_info import get_user_info
+from user_info import get_username, get_priv_key, get_pub_key
 import simplejson as json
 
 
 @eel.expose
 def new_user(user_name):
     # TODO don't let this run if there is already a user on the machine
+    # May need to add a nuke user if we run a second new_user
     # Protocol 0
     priv, pub = generate_keys()
     header = '@' + user_name + ':0'
@@ -45,7 +47,9 @@ def new_user(user_name):
 @eel.expose
 def delete_user():
     # Protocol 1
-    user_name, priv_key, pub_key = get_user_info()
+    user_name = get_username()
+    priv_key = get_priv_key()
+    pub_key = get_pub_key()
     header = '@' + user_name + ':1'
     packet = json.dumps({"Delete": 1, "public": pub_key, "private": priv_key})
     message = send([header + ' ' + packet])
@@ -55,7 +59,8 @@ def delete_user():
 @eel.expose
 def delete_item(item_key):
     # Protocol 2
-    user_name, priv_key, pub_key = get_user_info()
+    user_name = get_username()
+    priv_key = get_priv_key()
     header = '@' + user_name + ':2'
     packet = json.dumps({"Key": [item_key], "private": priv_key})
     message = send([header + ' ' + packet])
@@ -66,7 +71,8 @@ def delete_item(item_key):
 @eel.expose
 def add_item(item_name, category, subcategory, other_info):
     # Protocol 3
-    user_name, priv_key, pub_key = get_user_info()
+    user_name = get_username()
+    priv_key = get_priv_key()
     item = {
         "Current Owner": user_name,
         "Permanent Owner": user_name,
@@ -84,6 +90,7 @@ def add_item(item_name, category, subcategory, other_info):
     packet = json.dumps({item_key: item, "private": priv_key})
     message = send([header + ' ' + packet])
     print(message)
+    # item_key is returned for testing purposes
     return item_key
 
 
@@ -91,6 +98,15 @@ def add_item(item_name, category, subcategory, other_info):
 @eel.expose
 def send_all():
     # Protocol 4
+    my_dir = './web/db/'
+    user_name = get_username()
+    pub_key = get_pub_key()
+    header = '@' + user_name + ':4'
+    packet = json.dumps({"public": pub_key, "Library": 1})
+    message = send([header + ' ' + packet])
+    # TODO shave off the begining of the response time so it will actually be a json
+    f = open(os.path.join(my_dir, "mine.json"), "w")
+    f.write(message)
     return 'I get you all of your stuff and your friends'
 
 
@@ -162,6 +178,9 @@ def return_exchanges():
 
 if __name__ == '__main__':
     new_user('user1')
-    key = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')
-    delete_item(key)
+    key1 = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')
+    key2 = add_item('another great flick', 'Entertainment', 'Movie', 'some other cool stuff')
+    send_all()
+    delete_item(key1)
+    delete_item(key2)
     delete_user()
