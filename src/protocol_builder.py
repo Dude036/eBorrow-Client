@@ -4,6 +4,7 @@ from networking import send
 from keys import generate_keys, create_item_key
 from user_info import get_username, get_priv_key, get_pub_key
 import simplejson as json
+from test_pack import other_user, other_add_item, delete_other_user
 
 
 @eel.expose
@@ -35,7 +36,7 @@ def new_user(user_name):
         f.close()
 
         # Create file to hold future friend keys
-        f = open("friends.txt", "w")
+        f = open("friends.txt", "a")
         f.close()
         return 'Congratulations on your new account'
 
@@ -94,7 +95,6 @@ def add_item(item_name, category, subcategory, other_info):
     return item_key
 
 
-# Primarily called to initialize local database
 @eel.expose
 def send_all():
     # Protocol 4
@@ -104,9 +104,26 @@ def send_all():
     header = '@' + user_name + ':4'
     packet = json.dumps({"public": pub_key, "Library": 1})
     message = send([header + ' ' + packet])
-    # TODO shave off the begining of the response time so it will actually be a json
+    message = message.split(' ', 1)[1]
     f = open(os.path.join(my_dir, "mine.json"), "w")
     f.write(message)
+    f.close()
+
+    f = open(os.path.join(my_dir, "theirs.json"), "w")
+    f.write("")
+    f.close()
+    f = open(os.path.join(my_dir, "theirs.json"), "a")
+
+    friends = open("friends.txt", "r")
+    for friend in friends:
+        friend_key = friend
+        json.dumps({"public": friend_key, "Library": 1})
+        message = send([header + ' ' + packet])
+        print(message)
+
+    friends.close()
+    f.close()
+
     return 'I get you all of your stuff and your friends'
 
 
@@ -177,6 +194,22 @@ def return_exchanges():
 
 
 if __name__ == '__main__':
+    use1, priv1, pub1 = other_user('friend1')
+    other_1 = other_add_item('a sweet show', 'Entertainment', 'Movie', use1, priv1)
+    other_2 = other_add_item('a sweet show', 'Entertainment', 'Movie', use1, priv1)
+    use2, priv2, pub2 = other_user('friend2')
+    other_3 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
+    other_4 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
+
+    file = open("friends.txt", "w")
+    file.write('')
+    file.close()
+
+    file = open("friends.txt", "a")
+    file.write(pub1 + '\n')
+    file.write(pub2 + '\n')
+    file.close()
+
     new_user('user1')
     key1 = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')
     key2 = add_item('another great flick', 'Entertainment', 'Movie', 'some other cool stuff')
@@ -184,3 +217,6 @@ if __name__ == '__main__':
     delete_item(key1)
     delete_item(key2)
     delete_user()
+
+    delete_other_user(use1, priv1, pub1)
+    delete_other_user(use2, priv2, pub2)
