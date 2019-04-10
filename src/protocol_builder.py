@@ -40,6 +40,9 @@ def new_user(user_name):
         f.write('{}')
         f.close()
 
+        if not os.path.exists('./web/db'):
+            os.mkdir('./web/db')
+
         # Create user item database
         f = open("./web/db/mine.json", "w")
         f.write('{}')
@@ -127,16 +130,20 @@ def send_all():
     f.close()
     friend_library = json.loads(friend_library)
 
-    friends = open("friends.json", "r")
-    for friend in friends:
-        friend_key = friend
-        json.dumps({"public": friend_key, "Library": 1})
+    f = open("friends.json", "r")
+    my_friends = f.read()
+    f.close()
+    my_friends = json.loads(my_friends)
+
+    for friend in my_friends:
+        header = '@' + friend + ':4'
+        json.dumps({"public": my_friends[friend], "Library": 1})
         a_friend = send([header + ' ' + packet])
+        print(a_friend)
         a_friend = a_friend.split(' ', 1)[1]
         a_friend = json.loads(a_friend)
         for item in a_friend:
             friend_library[item] = a_friend[item]
-    friends.close()
 
     f = open(os.path.join(my_dir, "theirs.json"), "w")
     friend_library = json.dumps(friend_library)
@@ -162,14 +169,11 @@ def change_owner():
 @eel.expose
 def send_message():
     # Protocol 7.
-    print('in send message')
     user_name = get_username()
     priv_key = get_priv_key()
     header = '@' + user_name + ':7'
     packet = json.dumps({"Messages": 1, "private": priv_key})
-    print('sending request')
     message = send([header + ' ' + packet])
-    print('received request')
     print(message)
     return 'I send a message'
 
@@ -235,16 +239,16 @@ if __name__ == '__main__':
     other_4 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
 
     # Code to put friends pub keys where we can read over them
-    f = open("friends.json", "r")
-    friends = f.read()
-    f.close()
+    file = open("friends.json", "r")
+    friends = file.read()
+    file.close()
     friends = json.loads(friends)
     friends[use1] = pub1
     friends[use2] = pub2
     friends = json.dumps(friends)
-    f = open("friends.json", "w")
-    f.write(friends)
-    f.close()
+    file = open("friends.json", "w")
+    file.write(friends)
+    file.close()
 
     # Test each protocol
     key1 = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')

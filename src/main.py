@@ -1,4 +1,5 @@
 import eel
+import protocol_builder
 
 eel.init('web')
 
