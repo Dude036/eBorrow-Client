@@ -10,7 +10,7 @@ from test_pack import other_user, other_add_item, delete_other_user
 @eel.expose
 def new_user(user_name):
     # TODO don't let this run if there is already a user on the machine
-    # May need to add a nuke user if we run a second new_user
+    # TODO May need to add a nuke user if we run a second new_user
     # Protocol 0
     priv, pub = generate_keys()
     header = '@' + user_name + ':0'
@@ -38,11 +38,21 @@ def new_user(user_name):
         # Create file to hold future friend keys
         f = open("friends.txt", "a")
         f.close()
-        return 'Congratulations on your new account'
+
+        # Create user item database
+        f = open("./web/db/mine.json", "w")
+        f.write('{}')
+        f.close()
+
+        # Create friends item database
+        f = open("./web/db/theirs.json", "w")
+        f.write('{}')
+        f.close()
+        return True
 
     else:
         print('User name already in use')
-        return 'User name already in use'
+        return False
 
 
 @eel.expose
@@ -72,6 +82,7 @@ def delete_item(item_key):
 @eel.expose
 def add_item(item_name, category, subcategory, other_info):
     # Protocol 3
+    # TODO may want to add a send all or send some function for own stuff after this call
     user_name = get_username()
     priv_key = get_priv_key()
     item = {
@@ -98,6 +109,7 @@ def add_item(item_name, category, subcategory, other_info):
 @eel.expose
 def send_all():
     # Protocol 4
+    # TODO detect when the received packet is not an id 200
     my_dir = './web/db/'
     user_name = get_username()
     pub_key = get_pub_key()
@@ -109,19 +121,25 @@ def send_all():
     f.write(message)
     f.close()
 
-    f = open(os.path.join(my_dir, "theirs.json"), "w")
-    f.write("")
+    f = open(os.path.join(my_dir, "theirs.json"), "r")
+    friend_library = f.read()
     f.close()
-    f = open(os.path.join(my_dir, "theirs.json"), "a")
+    friend_library = json.loads(friend_library)
 
     friends = open("friends.txt", "r")
     for friend in friends:
         friend_key = friend
         json.dumps({"public": friend_key, "Library": 1})
-        message = send([header + ' ' + packet])
-        print(message)
-
+        a_friend = send([header + ' ' + packet])
+        a_friend = a_friend.split(' ', 1)[1]
+        a_friend = json.loads(a_friend)
+        for item in a_friend:
+            friend_library[item] = a_friend[item]
     friends.close()
+
+    f = open(os.path.join(my_dir, "theirs.json"), "w")
+    friend_library = json.dumps(friend_library)
+    f.write(friend_library)
     f.close()
 
     return 'I get you all of your stuff and your friends'
@@ -130,6 +148,7 @@ def send_all():
 @eel.expose
 def send_some():
     # Protocol 5
+    # Most likely to be used just after you add an item to have just it added to your local db
     return 'I get you specific information'
 
 
@@ -141,7 +160,16 @@ def change_owner():
 
 @eel.expose
 def send_message():
-    # Protocol 7
+    # Protocol 7.
+    print('in send message')
+    user_name = get_username()
+    priv_key = get_priv_key()
+    header = '@' + user_name + ':7'
+    packet = json.dumps({"Messages": 1, "private": priv_key})
+    print('sending request')
+    message = send([header + ' ' + packet])
+    print('received request')
+    print(message)
     return 'I send a message'
 
 
@@ -194,29 +222,34 @@ def return_exchanges():
 
 
 if __name__ == '__main__':
+    new_user('user1')
+    # Make some friends to practice with
     use1, priv1, pub1 = other_user('friend1')
+    use2, priv2, pub2 = other_user('friend2')
+
+    # Give friends some stuff
     other_1 = other_add_item('a sweet show', 'Entertainment', 'Movie', use1, priv1)
     other_2 = other_add_item('a sweet show', 'Entertainment', 'Movie', use1, priv1)
-    use2, priv2, pub2 = other_user('friend2')
     other_3 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
     other_4 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
 
+    # Code to put friends pub keys where we can read over them
     file = open("friends.txt", "w")
     file.write('')
     file.close()
-
     file = open("friends.txt", "a")
     file.write(pub1 + '\n')
     file.write(pub2 + '\n')
     file.close()
 
-    new_user('user1')
+    # Test each protocol
     key1 = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')
     key2 = add_item('another great flick', 'Entertainment', 'Movie', 'some other cool stuff')
     send_all()
     delete_item(key1)
     delete_item(key2)
-    delete_user()
+    send_message()
 
+    delete_user()
     delete_other_user(use1, priv1, pub1)
     delete_other_user(use2, priv2, pub2)
