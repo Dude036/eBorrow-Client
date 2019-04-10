@@ -36,7 +36,8 @@ def new_user(user_name):
         f.close()
 
         # Create file to hold future friend keys
-        f = open("friends.txt", "a")
+        f = open("friends.json", "w")
+        f.write('{}')
         f.close()
 
         # Create user item database
@@ -126,7 +127,7 @@ def send_all():
     f.close()
     friend_library = json.loads(friend_library)
 
-    friends = open("friends.txt", "r")
+    friends = open("friends.json", "r")
     for friend in friends:
         friend_key = friend
         json.dumps({"public": friend_key, "Library": 1})
@@ -234,13 +235,16 @@ if __name__ == '__main__':
     other_4 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
 
     # Code to put friends pub keys where we can read over them
-    file = open("friends.txt", "w")
-    file.write('')
-    file.close()
-    file = open("friends.txt", "a")
-    file.write(pub1 + '\n')
-    file.write(pub2 + '\n')
-    file.close()
+    f = open("friends.json", "r")
+    friends = f.read()
+    f.close()
+    friends = json.loads(friends)
+    friends[use1] = pub1
+    friends[use2] = pub2
+    friends = json.dumps(friends)
+    f = open("friends.json", "w")
+    f.write(friends)
+    f.close()
 
     # Test each protocol
     key1 = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')
