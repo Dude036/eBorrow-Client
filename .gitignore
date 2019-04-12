@@ -1,4 +1,8 @@
 /__pycache__/*
 /.idea/*
 *.json
+<<<<<<< HEAD
 *.txt
+=======
+.idea
+>>>>>>> 08573c0f05a39ebbec20b136336a2ff1666893a7

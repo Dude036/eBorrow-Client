@@ -36,7 +36,8 @@ def new_user(user_name):
         f.close()
 
         # Create file to hold future friend keys
-        f = open("friends.txt", "a")
+        f = open("friends.json", "w")
+        f.write('{}')
         f.close()
 
         # Create user item database
@@ -116,6 +117,7 @@ def send_all():
     header = '@' + user_name + ':4'
     packet = json.dumps({"public": pub_key, "Library": 1})
     message = send([header + ' ' + packet])
+    print(message)
     message = message.split(' ', 1)[1]
     f = open(os.path.join(my_dir, "mine.json"), "w")
     f.write(message)
@@ -126,16 +128,20 @@ def send_all():
     f.close()
     friend_library = json.loads(friend_library)
 
-    friends = open("friends.txt", "r")
-    for friend in friends:
-        friend_key = friend
-        json.dumps({"public": friend_key, "Library": 1})
+    f = open("friends.json", "r")
+    my_friends = f.read()
+    f.close()
+    my_friends = json.loads(my_friends)
+
+    for friend in my_friends:
+        header = '@' + friend + ':4'
+        json.dumps({"public": my_friends[friend], "Library": 1})
         a_friend = send([header + ' ' + packet])
+        print(a_friend)
         a_friend = a_friend.split(' ', 1)[1]
         a_friend = json.loads(a_friend)
         for item in a_friend:
             friend_library[item] = a_friend[item]
-    friends.close()
 
     f = open(os.path.join(my_dir, "theirs.json"), "w")
     friend_library = json.dumps(friend_library)
@@ -161,14 +167,11 @@ def change_owner():
 @eel.expose
 def send_message():
     # Protocol 7.
-    print('in send message')
     user_name = get_username()
     priv_key = get_priv_key()
     header = '@' + user_name + ':7'
     packet = json.dumps({"Messages": 1, "private": priv_key})
-    print('sending request')
     message = send([header + ' ' + packet])
-    print('received request')
     print(message)
     return 'I send a message'
 
@@ -221,6 +224,7 @@ def return_exchanges():
     return 'I do something'
 
 
+<<<<<<< HEAD
 # if __name__ == '__main__':
 #     new_user('user1')
 #     # Make some friends to practice with
@@ -253,3 +257,40 @@ def return_exchanges():
 #     delete_user()
 #     delete_other_user(use1, priv1, pub1)
 #     delete_other_user(use2, priv2, pub2)
+=======
+if __name__ == '__main__':
+    new_user('user1')
+    # Make some friends to practice with
+    use1, priv1, pub1 = other_user('friend1')
+    use2, priv2, pub2 = other_user('friend2')
+
+    # Give friends some stuff
+    other_1 = other_add_item('a sweet show', 'Entertainment', 'Movie', use1, priv1)
+    other_2 = other_add_item('a sweet show', 'Entertainment', 'Movie', use1, priv1)
+    other_3 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
+    other_4 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
+
+    # Code to put friends pub keys where we can read over them
+    file = open("friends.json", "r")
+    friends = file.read()
+    file.close()
+    friends = json.loads(friends)
+    friends[use1] = pub1
+    friends[use2] = pub2
+    friends = json.dumps(friends)
+    file = open("friends.json", "w")
+    file.write(friends)
+    file.close()
+
+    # Test each protocol
+    key1 = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')
+    key2 = add_item('another great flick', 'Entertainment', 'Movie', 'some other cool stuff')
+    send_all()
+    delete_item(key1)
+    delete_item(key2)
+    send_message()
+
+    delete_user()
+    delete_other_user(use1, priv1, pub1)
+    delete_other_user(use2, priv2, pub2)
+>>>>>>> 08573c0f05a39ebbec20b136336a2ff1666893a7
