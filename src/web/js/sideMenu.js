@@ -13,12 +13,12 @@ function createMenuItem(inner, href) {
 var sideMenuWrapper = util.makeDiv('sidemenu-wrapper');
 var mine = createMenuItem("My Items", "myStuff.html");
 var theirs = createMenuItem("Friends' Items", "theirStuff.html");
-
+var exhanges = createMenuItem("Exchanges", "");
+var profile = createMenuItem("My Profile", "");
 sideMenuWrapper.appendChild(theirs);
 sideMenuWrapper.appendChild(mine);
+sideMenuWrapper.appendChild(exhanges);
+sideMenuWrapper.appendChild(profile);
 
-for (var i = 0; i < 6; i++) {
-    var tmp = createMenuItem("Menu Item", "");
-    sideMenuWrapper.appendChild(tmp);
-}
+
 document.getElementById('main-wrapper').appendChild(sideMenuWrapper);
