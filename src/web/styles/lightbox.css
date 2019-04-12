@@ -26,4 +26,5 @@
     background-color: white;
     margin: auto;
     margin-top: calc(50vh - 200px);
+    border-radius: 8px;
 }

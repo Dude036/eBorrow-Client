@@ -102,6 +102,39 @@ function displayItem(jsonItem) {
         lightBox.removeChild(lightBox.firstChild);
     }
     lightBox.appendChild(lightboxItem);
+
+
+    var itemWrapperLeft = makeDiv('item-wrapper-left');
+    var itemImage = document.createElement('img');
+    itemImage.setAttribute('class', 'item-image');
+    if (jsonItem.Image === "")
+        itemImage.setAttribute('src', "../images/No-Image-Available.png");
+    else
+        itemImage.setAttribute('src', jsonItem.Image);
+    itemWrapperLeft.appendChild(itemImage);
+    var itemWrapperRight = makeDiv('item-wrapper-right');
+    var itemTitle = makeDiv('item-title');
+    itemTitle.innerHTML = jsonItem.Name;
+    itemWrapperRight.appendChild(itemTitle);
+    var itemCategory = makeDiv('item-category');
+    itemCategory.innerHTML = new String("Category: " + jsonItem.Category);
+    itemWrapperRight.appendChild(itemCategory);
+    var itemOwner = makeDiv('item-owner');
+    itemOwner.innerHTML = new String("Owner: " + jsonItem["Permanent Owner"]);
+    itemWrapperRight.appendChild(itemOwner);
+    var itemAvailable = document.createElement('div');
+    if (jsonItem.Available) {
+        itemAvailable.innerHTML = "Available";
+        itemAvailable.setAttribute('class', 'item-available');
+    }
+    else {
+        itemAvailable.innerHTML = "Unavailable";
+        itemAvailable.setAttribute('class', 'item-unavailable');
+    }
+    itemWrapperRight.appendChild(itemAvailable);
+
+    lightboxItem.appendChild(itemWrapperLeft);
+    lightboxItem.appendChild(itemWrapperRight);
 }
 
 export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem };
