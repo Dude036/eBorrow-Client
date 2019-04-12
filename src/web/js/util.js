@@ -11,7 +11,8 @@ function makeDiv(className = "") {
     return div;
 }
 
-function createItem(jsonItem) {
+function createItem(jsonItem, mine=false) {
+    console.log('It is mine: ' + mine)
     var itemWrapper = makeDiv('item-wrapper');
     var itemWrapperLeft = makeDiv('item-wrapper-left');
     var itemImage = document.createElement('img');
@@ -41,15 +42,27 @@ function createItem(jsonItem) {
         itemAvailable.setAttribute('class', 'item-unavailable');
     }
     itemWrapperRight.appendChild(itemAvailable);
-    var itemRequest = document.createElement('button');
-    itemRequest.setAttribute('class', 'item-request');
-    itemRequest.innerHTML = "Request";
-    itemRequest.addEventListener("click", function (e) { 
-        e.stopPropagation();
-        alert("Item Requested"); 
-    });
-    itemWrapperRight.appendChild(itemRequest);
-
+    if(mine)
+    {
+        var itemRequest = document.createElement('button');
+        itemRequest.setAttribute('class', 'item-request');
+        itemRequest.innerHTML = "Edit";
+        itemRequest.addEventListener("click", function (e) {
+            e.stopPropagation();
+            alert("Go to Edit Item Page");
+        });
+        itemWrapperRight.appendChild(itemRequest);
+    } else {
+        var itemRequest = document.createElement('button');
+        itemRequest.setAttribute('class', 'item-request');
+        itemRequest.innerHTML = "Request";
+        itemRequest.addEventListener("click", function (e) {
+            e.stopPropagation();
+            alert("Item Requested");
+        });
+        itemWrapperRight.appendChild(itemRequest);
+    }
+    
     itemWrapper.appendChild(itemWrapperLeft);
     itemWrapper.appendChild(itemWrapperRight);
     itemWrapper.onclick = () => displayItem(jsonItem);

@@ -20,10 +20,20 @@ loadJSON(function (response) {
     util.setCurrentDB(jsonresponse);
     var itemsContainer = util.makeDiv('items-container');
     itemsContainer.setAttribute('id', 'items-container');
+    var addItemWrapper = util.makeDiv('item-add-wrapper');
+    var addItem = document.createElement('button');
+    addItem.setAttribute('class', 'item-add');
+    addItem.innerHTML = "Add New Item";
+    addItem.addEventListener("click", function (e) {
+        e.stopPropagation();
+        alert("Navigate to New Item Page");
+    });
+    addItemWrapper.appendChild(addItem);
+    itemsContainer.appendChild(addItemWrapper);
 
     for (var prop in jsonresponse) {
         if (jsonresponse.hasOwnProperty(prop)) {
-            var item = util.createItem(jsonresponse[prop]);
+            var item = util.createItem(jsonresponse[prop], true);
             itemsContainer.appendChild(item);
         }
     }

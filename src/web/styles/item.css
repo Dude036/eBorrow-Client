@@ -34,6 +34,36 @@
     background-color: #c1c8e4;
     border-radius: 8px;
 }
+.item-add-wrapper {
+    float: right;
+    width: 100%;
+}
+.item-add {
+    float: right;
+    font-size: 1rem;
+    font-family: 'Raleway', sans-serif;
+    border-radius: 5em;
+    font-weight: 900;
+    color: #fff;
+    background: linear-gradient(to right, #31E89F, #31E8E8 );
+    border: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin: 10px;
+    margin-bottom: 0;
+    transition: all 0.1s ease-in-out;
+}
+
+.item-add:hover {
+    cursor: pointer;
+    transform: scale(1.07);
+}
+.item-add:focus {
+    outline: none;
+}
+
 .item-title {
     width: 100%;
     font-size: 2rem;
