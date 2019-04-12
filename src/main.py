@@ -1,6 +1,7 @@
 import eel
 import time
 import json
+from protocol_builder import new_user
 
 eel.init('web')
 
@@ -24,7 +25,7 @@ def getJson():
     return items
 
 
-eel.start('html/hello.html', block=False)
+eel.start('html/login.html', block=False)
 
 while True:
     eel.sleep(10)
