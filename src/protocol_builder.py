@@ -224,40 +224,6 @@ def return_exchanges():
     return 'I do something'
 
 
-<<<<<<< HEAD
-# if __name__ == '__main__':
-#     new_user('user1')
-#     # Make some friends to practice with
-#     use1, priv1, pub1 = other_user('friend1')
-#     use2, priv2, pub2 = other_user('friend2')
-
-#     # Give friends some stuff
-#     other_1 = other_add_item('a sweet show', 'Entertainment', 'Movie', use1, priv1)
-#     other_2 = other_add_item('a sweet show', 'Entertainment', 'Movie', use1, priv1)
-#     other_3 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
-#     other_4 = other_add_item('a sweet show', 'Entertainment', 'Movie', use2, priv2)
-
-#     # Code to put friends pub keys where we can read over them
-#     file = open("friends.txt", "w")
-#     file.write('')
-#     file.close()
-#     file = open("friends.txt", "a")
-#     file.write(pub1 + '\n')
-#     file.write(pub2 + '\n')
-#     file.close()
-
-#     # Test each protocol
-#     key1 = add_item('a good movie title', 'Entertainment', 'Movie', 'some other cool stuff')
-#     key2 = add_item('another great flick', 'Entertainment', 'Movie', 'some other cool stuff')
-#     send_all()
-#     delete_item(key1)
-#     delete_item(key2)
-#     send_message()
-
-#     delete_user()
-#     delete_other_user(use1, priv1, pub1)
-#     delete_other_user(use2, priv2, pub2)
-=======
 if __name__ == '__main__':
     new_user('user1')
     # Make some friends to practice with
@@ -293,4 +259,3 @@ if __name__ == '__main__':
     delete_user()
     delete_other_user(use1, priv1, pub1)
     delete_other_user(use2, priv2, pub2)
->>>>>>> 08573c0f05a39ebbec20b136336a2ff1666893a7
