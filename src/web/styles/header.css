@@ -3,41 +3,75 @@
     grid-row: 1/2;
 }
 .header-title {
+    font-family: 'Titillium Web', sans-serif;
     text-align: center;
     vertical-align: middle;
     line-height: 150px; 
-    font-size: 5rem;
+    font-size: 6rem;
     font-weight: 900;
     position: relative;
     color: #ffffff;
 }
 .header-logo {
+    grid-column: 1/2;
+    grid-row: 1/3;
     position: fixed;
-    left: calc(50% - 590px);
     margin-top: 20px;
 }
 
 .header-logo-anchor {
     position: sticky;
     top: 0;
-
 }
-
 
 .header-logo:hover {
     cursor: pointer;
 }
 
 .header-search-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    opacity: 1;
+    background-color: #FFFFFF;
     grid-column: 2/-1;
     grid-row: 2/3;
-    margin:auto;
+    border-bottom: 2px solid #31E8E8;
+}
+
+.header-search-wrapper-left {
+    float: left;
     height: 45px;
     width: 500px;
     border-radius: 25px;
+    margin: 10px 40px;
     -webkit-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.15);
     -moz-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.15);
     box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.15);
+}
+
+.header-search-wrapper-right {
+    float: right;
+    height: 45px;
+    width: 300px;
+    margin: 10px 40px;
+}
+
+.header-anchor {
+    color: #4E5258;
+    float: right;
+    margin: 0;
+}
+
+.header-anchor:hover {
+    color: #1b1b1d;
+}
+
+.header-icon {
+    font-size: 1.8rem;
+    opacity: .6;
+    padding: 10px;
+    padding-left: 0;
 }
 
 .header-search {
@@ -59,6 +93,7 @@
 
 .header-search-icon:hover {
     cursor: pointer;
+    color: #1b1b1d;
 }
 
 .button {
@@ -86,16 +121,16 @@
 
 .header-blue {
     background-color: #31C6E8;
-    top: 5px;
+    top: 15px;
     right: 400px;
 }
 .header-green {
     background-color: #31E89F;
-    top: 27px;
+    top: 37px;
     right: 320px;
 }
 .header-teal {
     background-color: #31E8E8;
-    top: 15px;
+    top: 25px;
     right: 200px;
 }

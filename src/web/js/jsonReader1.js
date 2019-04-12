@@ -11,6 +11,10 @@ function loadJSON(callback) {
     }
     xobj.send(null);
 }
+
+var lightBox = util.createLightBox();
+document.querySelector('body').appendChild(lightBox);
+
 loadJSON(function (response) {
     var jsonresponse = JSON.parse(response);
     util.setCurrentDB(jsonresponse);

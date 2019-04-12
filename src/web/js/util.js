@@ -44,12 +44,15 @@ function createItem(jsonItem) {
     var itemRequest = document.createElement('button');
     itemRequest.setAttribute('class', 'item-request');
     itemRequest.innerHTML = "Request";
-    itemRequest.addEventListener("click", function () { alert("Item Requested"); });
+    itemRequest.addEventListener("click", function (e) { 
+        e.stopPropagation();
+        alert("Item Requested"); 
+    });
     itemWrapperRight.appendChild(itemRequest);
 
     itemWrapper.appendChild(itemWrapperLeft);
     itemWrapper.appendChild(itemWrapperRight);
-    itemWrapper.onclick = () => console.log(jsonItem);
+    itemWrapper.onclick = () => displayItem(jsonItem);
     return itemWrapper;
 }
 
@@ -57,11 +60,14 @@ function filterBySearch() {
     console.log('currentDB: ');
     console.log(currentDB);
 
+    var prop = document.getElementById("search").value;
+    if (prop == '') {
+        return;
+    }
     var container = document.getElementById('items-container');
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
-    var prop = document.getElementById("search").value;
     if (currentDB.hasOwnProperty(prop)) {
         var item = createItem(currentDB[prop]);
         container.appendChild(item);
@@ -74,4 +80,28 @@ function filterBySearch() {
     }
 }
 
-export { makeDiv, createItem, filterBySearch, setCurrentDB};
+function createLightBox() {
+    console.log('in createLightBox()');
+    var lightBox = makeDiv('lightbox-wrapper-hidden');
+    lightBox.setAttribute('id', 'lightbox-wrapper')
+    lightBox.onclick = function() {
+        while (lightBox.firstChild) {
+            lightBox.removeChild(lightBox.firstChild);
+            lightBox.className = ('lightbox-wrapper-hidden');
+        }
+    }
+    return lightBox;
+}
+
+function displayItem(jsonItem) {
+    console.log('in displayItem()');
+    var lightboxItem = makeDiv('lightbox-item')
+    var lightBox = document.getElementById('lightbox-wrapper');
+    lightBox.className = 'lightbox-wrapper-visible';
+    while (lightBox.firstChild) {
+        lightBox.removeChild(lightBox.firstChild);
+    }
+    lightBox.appendChild(lightboxItem);
+}
+
+export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem };
