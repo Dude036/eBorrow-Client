@@ -133,6 +133,7 @@ def send_all():
     header = '@' + username + ':4'
     packet = json.dumps({"public": pub_key, "Library": 1})
     message = send([header + ' ' + packet])
+    print(message)
     message = message.split(' ', 1)[1]
     f = open(os.path.join(my_dir, "mine.json"), "w")
     f.write(message)

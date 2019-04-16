@@ -1,0 +1,30 @@
+.lightbox-wrapper-hidden {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: hsla(0, 0%, 0%, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 11;
+}
+
+.lightbox-wrapper-visible {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background-color: hsla(0, 0%, 0%, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 11;
+}
+
+.lightbox-item {
+    width: 600px;
+    height: 400px;
+    background-color: white;
+    margin: auto;
+    margin-top: calc(50vh - 200px);
+    border-radius: 8px;
+}

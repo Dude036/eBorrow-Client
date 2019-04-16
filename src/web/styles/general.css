@@ -4,9 +4,9 @@ body {
 
 #main-wrapper {
     margin: auto;
-    width: 1270px;
+    width: 1170px;
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 200px 1fr;
     grid-template-rows: 150px 70px 1fr;
     font-family: 'Raleway', sans-serif;
     /* background-image: linear-gradient(to bottom right, #5abaeab6, #8760d0ab); */
@@ -14,9 +14,9 @@ body {
     color: #4E5258;
 }
 
-/*
+/*  
     blue: #31C6E8
     green: #31E89F
-    teal: #31E8E8
+    teal: #31E8E8 
     gray: #4E5258
 */

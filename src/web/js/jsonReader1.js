@@ -11,6 +11,10 @@ function loadJSON(callback) {
     }
     xobj.send(null);
 }
+
+var lightBox = util.createLightBox();
+document.querySelector('body').appendChild(lightBox);
+
 loadJSON(function (response) {
     var jsonresponse = JSON.parse(response);
     util.setCurrentDB(jsonresponse);
@@ -25,3 +29,4 @@ loadJSON(function (response) {
     }
     document.getElementById('main-wrapper').appendChild(itemsContainer);
 });
+
