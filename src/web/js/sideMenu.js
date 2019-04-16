@@ -11,6 +11,7 @@ function createMenuItem(inner, href) {
 }
 
 var sideMenuWrapper = util.makeDiv('sidemenu-wrapper');
+
 var mine = createMenuItem("My Items", "myStuff.html");
 var theirs = createMenuItem("Friends' Items", "theirStuff.html");
 var exhanges = createMenuItem("Exchanges", "");
@@ -19,6 +20,5 @@ sideMenuWrapper.appendChild(theirs);
 sideMenuWrapper.appendChild(mine);
 sideMenuWrapper.appendChild(exhanges);
 sideMenuWrapper.appendChild(profile);
-
 
 document.getElementById('main-wrapper').appendChild(sideMenuWrapper);

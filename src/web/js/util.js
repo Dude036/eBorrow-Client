@@ -44,6 +44,7 @@ function createItem(jsonItem) {
     var itemRequest = document.createElement('button');
     itemRequest.setAttribute('class', 'item-request');
     itemRequest.innerHTML = "Request";
+
     itemRequest.addEventListener("click", function (e) { 
         e.stopPropagation();
         alert("Item Requested"); 
@@ -68,6 +69,7 @@ function filterBySearch() {
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
+
     if (currentDB.hasOwnProperty(prop)) {
         var item = createItem(currentDB[prop]);
         container.appendChild(item);
