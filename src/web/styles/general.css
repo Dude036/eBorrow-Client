@@ -1,16 +1,22 @@
 body {
-    height: 100vh;
-    width: 100vw;
+    width: 98vw;
+}
+
+#main-wrapper {
+    margin: auto;
+    width: 1170px;
     display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-template-rows: 100px 1fr;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 150px 70px 1fr;
     font-family: 'Raleway', sans-serif;
-    background-image: linear-gradient(to bottom right, #5abaeab6, #8760d0ab);
+    /* background-image: linear-gradient(to bottom right, #5abaeab6, #8760d0ab); */
     background-attachment: fixed;
-    color: #f0f5f8;
+    color: #4E5258;
 }
 
-.header {
-    color: rgb(206, 16, 22);
-}
-
+/*  
+    blue: #31C6E8
+    green: #31E89F
+    teal: #31E8E8 
+    gray: #4E5258
+*/

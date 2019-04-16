@@ -1,6 +1,7 @@
+import * as util from './util.js';
+
 function createMenuItem(inner, href) {
-    var wrap = document.createElement('div');
-    wrap.setAttribute('class', 'sidemenu-itemwrapper');
+    var wrap = util.makeDiv('sidemenu-itemwrapper');
     var item = document.createElement('a');
     item.setAttribute('class', 'sidemenu-item');
     item.setAttribute('href', href);
@@ -9,14 +10,15 @@ function createMenuItem(inner, href) {
     return wrap;
 }
 
-var sideMenuWrapper = document.createElement('div');
-sideMenuWrapper.setAttribute('class', 'sidemenu-wrapper');
-var mine = createMenuItem("View My Stuff", "hello.html");
-var theirs = createMenuItem("View Friends Stuff", "theirStuff.html");
-sideMenuWrapper.appendChild(mine);
+var sideMenuWrapper = util.makeDiv('sidemenu-wrapper');
+var mine = createMenuItem("My Items", "myStuff.html");
+var theirs = createMenuItem("Friends' Items", "theirStuff.html");
+var exhanges = createMenuItem("Exchanges", "");
+var profile = createMenuItem("My Profile", "");
 sideMenuWrapper.appendChild(theirs);
-for (i = 0; i < 6; i++) {
-    var tmp = createMenuItem("Menu Item", "");
-    sideMenuWrapper.appendChild(tmp);
-}
-document.querySelector('body').appendChild(sideMenuWrapper);
+sideMenuWrapper.appendChild(mine);
+sideMenuWrapper.appendChild(exhanges);
+sideMenuWrapper.appendChild(profile);
+
+
+document.getElementById('main-wrapper').appendChild(sideMenuWrapper);
