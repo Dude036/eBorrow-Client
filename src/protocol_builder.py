@@ -208,9 +208,9 @@ def send_message():
     packet = json.dumps({"Messages": 1, "private": priv_key})
     message = send([header + ' ' + packet])
     print(message)
-    message = message.split(":201 ")
+    message = message.split("[")
     message = message[1]
-    message = message.replace("[]", "")
+    message = message.replace("]", "")
     message = message.split(", ")
     f = open("./web/db/messages.json", "r")
     message_db = f.read()
@@ -234,9 +234,9 @@ def send_exchange():
     packet = json.dumps({"Exchanges": 1, "private": priv_key})
     message = send([header + ' ' + packet])
     print(message)
-    message = message.split(":201 ")
+    message = message.split("[")
     message = message[1]
-    message = message.replace("[]", "")
+    message = message.replace("]", "")
     message = message.split(", ")
     f = open("./web/db/messages.json", "r")
     message_db = f.read()
@@ -263,21 +263,24 @@ def clear_messagese():
 
 @eel.expose
 def send_pending_friends():
+    # TODO need to implement remove friend.
     username = get_username()
     priv_key = get_priv_key()
     header = '@' + username + ':10'
     packet = json.dumps({"Friends": 1, "private": priv_key})
     message = send([header + ' ' + packet])
     print(message)
-    message = message.split(":204 ")
+    message = message.split("[")
     message = message[1]
-    message = message.replace("[]", "")
+    message = message.replace("]", "")
     message = message.split(", ")
     f = open("./web/db/messages.json", "r")
     message_db = f.read()
     f.close()
     message_db = json.loads(message_db)
     for i in message:
+        # read over each item and either add it or remove a friend
+        # if i
         message_db["pending friends"].append(i)
     message_db = json.dumps(message_db)
     f = open("./web/db/messages.json", "w")
@@ -293,9 +296,9 @@ def send_pending_exchanges():
     packet = json.dumps({"Exchanges": 1, "private": priv_key})
     message = send([header + ' ' + packet])
     print(message)
-    message = message.split(":203 ")
+    message = message.split("{")
     message = message[1]
-    message = message.replace("[]", "")
+    message = message.replace("}", "")
     message = message.split(", ")
     f = open("./web/db/messages.json", "r")
     message_db = f.read()
@@ -314,6 +317,8 @@ def item_request(item_hash, friend_name):
     # Protocol 100
     username = get_username()
     pub_key = get_pub_key()
+    # print(pub_key)
+    # pub_key = "pub_key"
     header = '@' + username + ':100'
 
     borrower_info = {"Public": pub_key, "Username": username}
@@ -322,14 +327,16 @@ def item_request(item_hash, friend_name):
     f.close()
     my_friends = json.loads(my_friends)
     friend_key = my_friends[friend_name]
+    # print(friend_key)
+    # friend_key = "friend_key"
     lender_info = {"Public": friend_key, "Username": friend_name}
 
     packet = {}
-    packet[item_hash] = 1
+    packet["Key"] = item_hash
     packet["Borrower"] = borrower_info
     packet["Lender"] = lender_info
+    # print(packet)
     packet = json.dumps(packet)
-
     message = send([header + ' ' + packet])
     print(message)
 
@@ -412,9 +419,13 @@ if __name__ == '__main__':
     send_exchange()
     send_pending_exchanges()
     send_pending_friends()
-    # item_request(other_1, use1)
+    print('item request')
+    item_request(other_1, use1)
+    # print('friend request')
     # friend_request(use2)
+    # print('add friend')
     # add_friend(use2)
+    # print('delete friend')
     # delete_friend(use2)
 
     print('delete user')
