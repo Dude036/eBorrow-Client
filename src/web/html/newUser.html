@@ -39,10 +39,12 @@
             worked = eel.new_user(username)();
             if(worked) {
                 console.log('It Worked!!!');
+                document.location.href = "theirStuff.html";
             } else {
                 console.log('didnt work');
+                alert("That Username is taken. \nTry a different one.");
             }
-            document.location.href = "theirStuff.html";
+            
         }
     </script>
 </body>
