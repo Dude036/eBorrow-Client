@@ -35,13 +35,13 @@ def new_user(username):
         f.write(pub_key)
         f.close()
 
-        # Create file to hold future friend keys
-        f = open("friends.json", "w")
-        f.write('{}')
-        f.close()
-
         if not os.path.exists('./web/db'):
             os.mkdir('./web/db')
+
+        # Create file to hold future friend keys
+        f = open("./web/db/friends.json", "w")
+        f.write('{}')
+        f.close()
 
         # Create user item database
         f = open("./web/db/mine.json", "w")
@@ -144,7 +144,7 @@ def send_all():
     f.close()
     friend_library = json.loads(friend_library)
 
-    f = open("friends.json", "r")
+    f = open("./web/db/friends.json", "r")
     my_friends = f.read()
     f.close()
     my_friends = json.loads(my_friends)
@@ -179,7 +179,7 @@ def change_owner(item_key, friend_name, in_date, out_date):
     # permanent owner agrees to loan item, this protocol is sent
     username = get_username()
     priv_key = get_priv_key()
-    f = open("friends.json", "r")
+    f = open("./web/db/friends.json", "r")
     friend_list = f.read()
     f.close()
     friend_list = json.loads(friend_list)
@@ -218,6 +218,12 @@ def send_message():
     f.close()
     message_db = json.loads(message_db)
     for i in message:
+
+        # packet = i.split['packet:']
+        # packet = packet[1]
+        # packet = json.loads(packet)
+
+
         message_db["messages"].append(i)
     message_db = json.dumps(message_db)
     f = open("./web/db/messages.json", "w")
@@ -326,7 +332,7 @@ def item_request(item_hash, friend_name):
     header = '@' + username + ':100'
 
     borrower_info = {"Public": pub_key, "Username": username}
-    f = open("friends.json", "r")
+    f = open("./web/db/friends.json", "r")
     my_friends = f.read()
     f.close()
     my_friends = json.loads(my_friends)
@@ -409,14 +415,14 @@ if __name__ == '__main__':
     other_4 = other_add_item('a totally different show show', 'Entertainment', 'Movie', use2, priv2)
 
     # Code to put friends pub keys where we can read over them
-    file = open("friends.json", "r")
+    file = open("./web/db/friends.json", "r")
     friends = file.read()
     file.close()
     friends = json.loads(friends)
     friends[use1] = pub1
     friends[use2] = pub2
     friends = json.dumps(friends)
-    file = open("friends.json", "w")
+    file = open("./web/db/friends.json", "w")
     file.write(friends)
     file.close()
 
