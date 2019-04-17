@@ -4,7 +4,7 @@ from networking import send
 from keys import generate_keys, create_item_key
 from user_info import get_username, get_priv_key, get_pub_key
 import simplejson as json
-from test_pack import other_user, other_add_item, delete_other_user
+from test_pack import other_user, other_add_item, delete_other_user, add_friend_test, delete_friend_test
 
 
 @eel.expose
@@ -213,17 +213,12 @@ def send_message():
     message = message[1]
     message = message.replace("]", "")
     message = message.split(", ")
+    # print(message)
     f = open("./web/db/messages.json", "r")
     message_db = f.read()
     f.close()
     message_db = json.loads(message_db)
     for i in message:
-
-        # packet = i.split['packet:']
-        # packet = packet[1]
-        # packet = json.loads(packet)
-
-
         message_db["messages"].append(i)
     message_db = json.dumps(message_db)
     f = open("./web/db/messages.json", "w")
@@ -442,12 +437,16 @@ if __name__ == '__main__':
     send_pending_friends()
     print('item request')
     item_request(other_1, use1)
-    # print('friend request')
-    # friend_request(use2)
-    # print('add friend')
-    # add_friend(use2)
-    # print('delete friend')
-    # delete_friend(use2)
+
+    print('add friend')
+    add_friend_test(get_username(), get_pub_key(), 1, use1, pub1)
+    add_friend_test(get_username(), get_pub_key(), 1, use2, pub2)
+    print('delete friend')
+    delete_friend_test('user1', use1)
+    delete_friend_test('user1', use1)
+
+    send_message()
+    send_pending_friends()
 
     print('delete user')
     delete_user()
