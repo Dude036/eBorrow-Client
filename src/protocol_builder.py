@@ -40,6 +40,9 @@ def new_user(user_name):
         f.write('{}')
         f.close()
 
+        if not os.path.exists('./web/db'):
+            os.mkdir('./web/db')
+
         # Create user item database
         f = open("./web/db/mine.json", "w")
         f.write('{}')
