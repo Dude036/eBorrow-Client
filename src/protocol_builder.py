@@ -133,7 +133,7 @@ def send_all():
     header = '@' + username + ':4'
     packet = json.dumps({"public": pub_key, "Library": 1})
     message = send([header + ' ' + packet])
-    print(message)
+    # print(message)
     message = message.split(' ', 1)[1]
     f = open(os.path.join(my_dir, "mine.json"), "w")
     f.write(message)
@@ -254,6 +254,7 @@ def send_exchange():
 
 @eel.expose
 def clear_messagese():
+    # Protocol 9
     username = get_username()
     priv_key = get_priv_key()
     header = '@' + username + ':9'
@@ -264,6 +265,7 @@ def clear_messagese():
 
 @eel.expose
 def send_pending_friends():
+    # Protocol 10
     # TODO need to implement remove friend.
     username = get_username()
     priv_key = get_priv_key()
@@ -291,6 +293,7 @@ def send_pending_friends():
 
 @eel.expose
 def send_pending_exchanges():
+    # Protocol 11
     username = get_username()
     priv_key = get_priv_key()
     header = '@' + username + ':11'
@@ -356,14 +359,25 @@ def friend_request(friend_name):
 
 
 @eel.expose
-def add_friend(friend_name):
+def add_friend(friend_name, friend_key, step):
     # Protocol 102
+    f = open('frends.json', 'r')
+    friends = f.read()
+    friends = json.loads(friends)
+    f.close()
+    friends[friend_name] = friend_key
+    f = open('frends.json', 'w')
+    friends = json.dumps(friends)
+    f.write(friends)
+    f.close()
+
     username = get_username()
     pub_key = get_pub_key()
     header = '@' + username + ':102'
     packet = {}
     packet["Target"] = friend_name
     packet["Key"] = pub_key
+    packet["Step"] = step
     packet = json.dumps(packet)
     message = send([header + ' ' + packet])
     print(message)
