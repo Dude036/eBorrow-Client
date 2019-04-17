@@ -12,7 +12,6 @@ function makeDiv(className = "") {
 }
 
 function createItem(jsonItem, mine=false) {
-    console.log('It is mine: ' + mine)
     var itemWrapper = makeDiv('item-wrapper');
     var itemWrapperLeft = makeDiv('item-wrapper-left');
     var itemImage = document.createElement('img');
@@ -164,4 +163,13 @@ function createInput(type, id, className, place) {
     return input;
 }
 
-export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem, createInput };
+async function reloadProgram() {
+    await eel.send_all()();
+    await eel.send_message()();
+    await eel.send_exchange()();
+    await eel.send_pending_friends()();
+    await eel.send_pending_exchanges()();
+    location.reload();
+}
+
+export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem, createInput, reloadProgram };

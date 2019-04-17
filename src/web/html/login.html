@@ -32,8 +32,13 @@
     </div>
 
     <script>
+
         async function signIn() {
             await eel.send_all()();
+            await eel.send_message()();
+            await eel.send_exchange()();
+            await eel.send_pending_friends()();
+            await eel.send_pending_exchanges()();
             document.location.href = "theirStuff.html";
         }
     </script>
