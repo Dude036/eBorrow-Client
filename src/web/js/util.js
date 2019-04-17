@@ -82,16 +82,20 @@ function filterBySearch() {
         container.removeChild(container.firstChild);
     }
 
-    if (currentDB.hasOwnProperty(prop)) {
-        var item = createItem(currentDB[prop]);
-        container.appendChild(item);
-    }
-    else 
+    for(var item in currentDB)
     {
-        noResults = makeDiv('no-results');
-        noResults.innerHTML = 'No Search Results';
-        container.appendChild(noResults);
+        console.log(item);
     }
+    // if (currentDB.hasOwnProperty(prop)) {
+    //     var item = createItem(currentDB[prop]);
+    //     container.appendChild(item);
+    // }
+    // else 
+    // {
+    //     noResults = makeDiv('no-results');
+    //     noResults.innerHTML = 'No Search Results';
+    //     container.appendChild(noResults);
+    // }
 }
 
 function createLightBox() {

@@ -102,7 +102,7 @@ def add_item(item_name, category, subcategory, groups, type, user_tag):
         "Name": item_name,
         "Groups": [],
         "Type Info": {},
-        "Image": '',
+        "Image": 'https://source.unsplash.com/random',
         "User Tags": [],
     }
     groups = groups.split(" ")
@@ -133,7 +133,7 @@ def send_all():
     header = '@' + username + ':4'
     packet = json.dumps({"public": pub_key, "Library": 1})
     message = send([header + ' ' + packet])
-    print(message)
+    # print(message)
     message = message.split(' ', 1)[1]
     f = open(os.path.join(my_dir, "mine.json"), "w")
     f.write(message)
@@ -412,16 +412,16 @@ if __name__ == '__main__':
     key2 = add_item('another great flick', 'Entertainment', 'Movie', 'men', 'it is in good condition', 'action')
     print('send all')
     send_all()
-    print('delete item')
-    delete_item(key1)
-    delete_item(key2)
+    # print('delete item')
+    # delete_item(key1)
+    # delete_item(key2)
     print('send messages')
     send_message()
     send_exchange()
     send_pending_exchanges()
     send_pending_friends()
-    print('item request')
-    item_request(other_1, use1)
+    # print('item request')
+    # item_request(other_1, use1)
     # print('friend request')
     # friend_request(use2)
     # print('add friend')
@@ -429,7 +429,7 @@ if __name__ == '__main__':
     # print('delete friend')
     # delete_friend(use2)
 
-    print('delete user')
-    delete_user()
-    delete_other_user(use1, priv1, pub1)
-    delete_other_user(use2, priv2, pub2)
+    # print('delete user')
+    # delete_user()
+    # delete_other_user(use1, priv1, pub1)
+    # delete_other_user(use2, priv2, pub2)
