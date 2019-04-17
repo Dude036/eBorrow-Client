@@ -12,7 +12,6 @@ function makeDiv(className = "") {
 }
 
 function createItem(jsonItem, mine=false) {
-    console.log('It is mine: ' + mine)
     var itemWrapper = makeDiv('item-wrapper');
     var itemWrapperLeft = makeDiv('item-wrapper-left');
     var itemImage = document.createElement('img');
@@ -70,11 +69,8 @@ function createItem(jsonItem, mine=false) {
 }
 
 function filterBySearch() {
-    console.log('currentDB: ');
-    console.log(currentDB);
-
-    var prop = document.getElementById("search").value;
-    if (prop == '') {
+    var keyword = document.getElementById("search").value.toUpperCase();
+    if (keyword == '') {
         return;
     }
     var container = document.getElementById('items-container');
@@ -82,11 +78,18 @@ function filterBySearch() {
         container.removeChild(container.firstChild);
     }
 
-    if (currentDB.hasOwnProperty(prop)) {
-        var item = createItem(currentDB[prop]);
-        container.appendChild(item);
+    for(var obj in currentDB)
+    {
+        if(currentDB.hasOwnProperty(obj))
+        {
+            if(currentDB[obj].Name.toUpperCase() == keyword)
+            {
+                var item = createItem(currentDB[obj]);
+                container.appendChild(item);
+            }
+        }
     }
-    else 
+    if(!container.hasChildNodes())
     {
         noResults = makeDiv('no-results');
         noResults.innerHTML = 'No Search Results';
@@ -151,4 +154,22 @@ function displayItem(jsonItem) {
     lightboxItem.appendChild(itemWrapperRight);
 }
 
-export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem };
+function createInput(type, id, className, place) {
+    var input = document.createElement('input');
+    input.setAttribute('type', type);
+    input.setAttribute('id', id);
+    input.setAttribute('class', className);
+    input.setAttribute('placeholder', place);
+    return input;
+}
+
+async function reloadProgram() {
+    await eel.send_all()();
+    await eel.send_message()();
+    await eel.send_exchange()();
+    await eel.send_pending_friends()();
+    await eel.send_pending_exchanges()();
+    location.reload();
+}
+
+export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem, createInput, reloadProgram };

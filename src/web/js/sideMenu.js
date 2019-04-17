@@ -16,7 +16,7 @@ var mine = createMenuItem("My Items", "myStuff.html");
 var theirs = createMenuItem("Friends' Items", "theirStuff.html");
 var exhanges = createMenuItem("Exchanges", "");
 var profile = createMenuItem("My Profile", "");
-var friends = createMenuItem("My Friends", "");
+var friends = createMenuItem("My Friends", "friends.html");
 sideMenuWrapper.appendChild(theirs);
 sideMenuWrapper.appendChild(mine);
 sideMenuWrapper.appendChild(exhanges);

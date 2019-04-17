@@ -26,10 +26,22 @@
             <form class="form1">
                 <input class="un " id="username" type="text" align="center" placeholder="Username">
                 <input class="pass" type="password" align="center" placeholder="Password">
-                <a class="submit" align="center" href="theirStuff.html">Sign in</a>
+                <a class="submit" align="center" href="#" onclick="signIn()">Sign In</a>
                 <p class="forgot" align="center"><a href="newUser.html">New User? Create a Profile</p>
         </div>
     </div>
+
+    <script>
+
+        async function signIn() {
+            await eel.send_all()();
+            await eel.send_message()();
+            await eel.send_exchange()();
+            await eel.send_pending_friends()();
+            await eel.send_pending_exchanges()();
+            document.location.href = "theirStuff.html";
+        }
+    </script>
 </body>
 
 </html>
