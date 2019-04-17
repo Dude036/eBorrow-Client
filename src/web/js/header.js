@@ -26,6 +26,7 @@ search.setAttribute('id', 'search');
 
 var right = util.makeDiv('header-search-wrapper-right');
 var reload = createIcon("header-anchor", "#", "fas fa-redo-alt header-icon");
+reload.addEventListener('click', util.reloadProgram)
 var profile = createIcon("header-anchor", "#", "far fa-user header-icon");
 var messages = createIcon("header-anchor", "#", "far fa-envelope header-icon");
 var notifications = createIcon("header-anchor", "#", "far fa-bell header-icon");

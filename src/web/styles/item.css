@@ -33,6 +33,7 @@
     height: 150px;
     background-color: #c1c8e4;
     border-radius: 8px;
+    line-height: 150px;
 }
 .item-add-wrapper {
     float: right;
