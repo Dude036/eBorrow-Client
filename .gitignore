@@ -1,7 +1,5 @@
-__pycache__/
+*.pyc
 /.idea/*
 *.json
-.idea/
-private.txt
-public.txt
-username.txt
+*.txt
+*.xml

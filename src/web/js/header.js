@@ -63,3 +63,4 @@ document.getElementById('header-title').appendChild(greenHex);
 
 var tealHex = util.makeDiv('header-teal hex');
 document.getElementById('header-title').appendChild(tealHex);
+

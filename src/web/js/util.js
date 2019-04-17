@@ -81,6 +81,7 @@ function filterBySearch() {
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
+
     if (currentDB.hasOwnProperty(prop)) {
         var item = createItem(currentDB[prop]);
         container.appendChild(item);

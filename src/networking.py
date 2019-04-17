@@ -44,7 +44,7 @@ def send(send_buffer):
         s = socket.create_connection((HOST, PORT))
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.sendall(thing.encode() + END_BYTE)
-        time.sleep(1)
+        time.sleep(.1)
         response = recv_until(s)
         s.close()
     return response
