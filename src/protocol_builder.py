@@ -208,6 +208,7 @@ def send_message():
     header = '@' + username + ':7'
     packet = json.dumps({"Messages": 1, "private": priv_key})
     message = send([header + ' ' + packet])
+    print('this is what came back')
     print(message)
     message = message.split("[")
     message = message[1]
@@ -362,7 +363,7 @@ def friend_request(friend_name):
 @eel.expose
 def add_friend(friend_name, friend_key, step):
     # Protocol 102
-    f = open('frends.json', 'r')
+    f = open('./web/db/friends.json', 'r')
     friends = f.read()
     friends = json.loads(friends)
     f.close()
@@ -439,6 +440,8 @@ if __name__ == '__main__':
     item_request(other_1, use1)
 
     print('add friend')
+    friend_request(use1)
+    add_friend(use1, '', 1)
     add_friend_test(get_username(), get_pub_key(), 1, use1, pub1)
     add_friend_test(get_username(), get_pub_key(), 1, use2, pub2)
     print('delete friend')
@@ -449,6 +452,6 @@ if __name__ == '__main__':
     send_pending_friends()
 
     print('delete user')
-    delete_user()
-    delete_other_user(use1, priv1, pub1)
-    delete_other_user(use2, priv2, pub2)
+    # delete_user()
+    # delete_other_user(use1, priv1, pub1)
+    # delete_other_user(use2, priv2, pub2)
