@@ -78,8 +78,7 @@
     width: auto;
     height: auto;
     margin: auto;
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
 }
 .item-available {
     position: absolute;

@@ -70,11 +70,8 @@ function createItem(jsonItem, mine=false) {
 }
 
 function filterBySearch() {
-    console.log('currentDB: ');
-    console.log(currentDB);
-
-    var prop = document.getElementById("search").value;
-    if (prop == '') {
+    var keyword = document.getElementById("search").value.toUpperCase();
+    if (keyword == '') {
         return;
     }
     var container = document.getElementById('items-container');
@@ -82,20 +79,23 @@ function filterBySearch() {
         container.removeChild(container.firstChild);
     }
 
-    for(var item in currentDB)
+    for(var obj in currentDB)
     {
-        console.log(item);
+        if(currentDB.hasOwnProperty(obj))
+        {
+            if(currentDB[obj].Name.toUpperCase() == keyword)
+            {
+                var item = createItem(currentDB[obj]);
+                container.appendChild(item);
+            }
+        }
     }
-    // if (currentDB.hasOwnProperty(prop)) {
-    //     var item = createItem(currentDB[prop]);
-    //     container.appendChild(item);
-    // }
-    // else 
-    // {
-    //     noResults = makeDiv('no-results');
-    //     noResults.innerHTML = 'No Search Results';
-    //     container.appendChild(noResults);
-    // }
+    if(!container.hasChildNodes())
+    {
+        noResults = makeDiv('no-results');
+        noResults.innerHTML = 'No Search Results';
+        container.appendChild(noResults);
+    }
 }
 
 function createLightBox() {
@@ -155,4 +155,13 @@ function displayItem(jsonItem) {
     lightboxItem.appendChild(itemWrapperRight);
 }
 
-export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem };
+function createInput(type, id, className, place) {
+    var input = document.createElement('input');
+    input.setAttribute('type', type);
+    input.setAttribute('id', id);
+    input.setAttribute('class', className);
+    input.setAttribute('placeholder', place);
+    return input;
+}
+
+export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem, createInput };
