@@ -4,7 +4,8 @@ from networking import send
 from keys import generate_keys, create_item_key
 from user_info import get_username, get_priv_key, get_pub_key
 import simplejson as json
-from test_pack import other_user, other_add_item, delete_other_user
+from test_pack import other_user, other_add_item, delete_other_user, add_friend_test, delete_friend_test
+import time
 
 
 @eel.expose
@@ -208,27 +209,31 @@ def send_message():
     header = '@' + username + ':7'
     packet = json.dumps({"Messages": 1, "private": priv_key})
     message = send([header + ' ' + packet])
-    print(message)
-    message = message.split("[")
+    message = message.split(":201 ")
     message = message[1]
-    message = message.replace("]", "")
-    message = message.split(", ")
-    f = open("./web/db/messages.json", "r")
-    message_db = f.read()
+    message = json.loads(message)
+    f = open("./web/db/friends.json", "r")
+    friends_list = f.read()
+    friends_list = json.loads(friends_list)
     f.close()
-    message_db = json.loads(message_db)
     for i in message:
-
-        # packet = i.split['packet:']
-        # packet = packet[1]
-        # packet = json.loads(packet)
-
-
-        message_db["messages"].append(i)
-    message_db = json.dumps(message_db)
-    f = open("./web/db/messages.json", "w")
-    f.write(message_db)
+        item = i
+        item = str(item)
+        item = item.split("@")
+        item = item[1]
+        item = item.split(":102 ")
+        key = item[0]
+        info = item[1]
+        info = json.loads(info)
+        friend_key = info["Key"]
+        friends_list[key] = friend_key
+        if info["Step"] == 1:
+            add_friend(key, 2)
+    f = open("./web/db/friends.json", "w")
+    friends_list = json.dumps(friends_list)
+    f.write(friends_list)
     f.close()
+
     return 'I get you all of the messages from your "inbox"'
 
 
@@ -240,19 +245,18 @@ def send_exchange():
     header = '@' + username + ':8'
     packet = json.dumps({"Exchanges": 1, "private": priv_key})
     message = send([header + ' ' + packet])
+    print("send exchanges")
     print(message)
-    message = message.split("[")
+    message = message.split(":201 ")
     message = message[1]
-    message = message.replace("]", "")
-    message = message.split(", ")
+    message = json.loads(message)
     f = open("./web/db/messages.json", "r")
     message_db = f.read()
-    f.close()
     message_db = json.loads(message_db)
-    for i in message:
-        message_db["exchanges"].append(i)
-    message_db = json.dumps(message_db)
+    f.close()
+    message_db["exchanges"] = message
     f = open("./web/db/messages.json", "w")
+    message_db = json.dumps(message_db)
     f.write(message_db)
     f.close()
     return 'I get you all of your exchanges'
@@ -276,21 +280,17 @@ def send_pending_friends():
     username = get_username()
     priv_key = get_priv_key()
     header = '@' + username + ':10'
-    packet = json.dumps({"Friends": 1, "private": priv_key})
+    packet = json.dumps({"Friends": 1, "private": priv_key, "Sender": username})
     message = send([header + ' ' + packet])
     print(message)
-    message = message.split("[")
+    message = message.split(":204 ")
     message = message[1]
-    message = message.replace("]", "")
-    message = message.split(", ")
+    message = json.loads(message)
     f = open("./web/db/messages.json", "r")
     message_db = f.read()
     f.close()
     message_db = json.loads(message_db)
-    for i in message:
-        # read over each item and either add it or remove a friend
-        # if i
-        message_db["pending friends"].append(i)
+    message_db["pending friends"] = message
     message_db = json.dumps(message_db)
     f = open("./web/db/messages.json", "w")
     f.write(message_db)
@@ -305,19 +305,17 @@ def send_pending_exchanges():
     header = '@' + username + ':11'
     packet = json.dumps({"Exchanges": 1, "private": priv_key})
     message = send([header + ' ' + packet])
-    print(message)
-    message = message.split("{")
+    print("pending ex")
+    message = message.split(":203 ")
     message = message[1]
-    message = message.replace("}", "")
-    message = message.split(", ")
+    message = json.loads(message)
     f = open("./web/db/messages.json", "r")
     message_db = f.read()
-    f.close()
     message_db = json.loads(message_db)
-    for i in message:
-        message_db["pending exchanges"].append(i)
-    message_db = json.dumps(message_db)
+    f.close()
+    message_db["pending exchanges"] = message
     f = open("./web/db/messages.json", "w")
+    message_db = json.dumps(message_db)
     f.write(message_db)
     f.close()
 
@@ -365,18 +363,8 @@ def friend_request(friend_name):
 
 
 @eel.expose
-def add_friend(friend_name, friend_key, step):
+def add_friend(friend_name, step):
     # Protocol 102
-    f = open('frends.json', 'r')
-    friends = f.read()
-    friends = json.loads(friends)
-    f.close()
-    friends[friend_name] = friend_key
-    f = open('frends.json', 'w')
-    friends = json.dumps(friends)
-    f.write(friends)
-    f.close()
-
     username = get_username()
     pub_key = get_pub_key()
     header = '@' + username + ':102'
@@ -432,22 +420,29 @@ if __name__ == '__main__':
     key2 = add_item('another great flick', 'Entertainment', 'Movie', 'men', 'it is in good condition', 'action')
     print('send all')
     send_all()
-    # print('delete item')
-    # delete_item(key1)
-    # delete_item(key2)
+
+    print('delete item')
+    delete_item(key1)
+    delete_item(key2)
+
+    print('item request')
+    item_request(other_1, use1)
+
+    print('add friend')
+    friend_request(use1)
+    add_friend(use1, 1)
+    add_friend_test(get_username(), get_pub_key(), 1, use1, pub1)
+    add_friend_test(get_username(), get_pub_key(), 1, use2, pub2)
+    print('delete friend')
+    delete_friend_test('user1', use1)
+    delete_friend_test('user1', use1)
+
     print('send messages')
     send_message()
     send_exchange()
     send_pending_exchanges()
     send_pending_friends()
-    # print('item request')
-    # item_request(other_1, use1)
-    # print('friend request')
-    # friend_request(use2)
-    # print('add friend')
-    # add_friend(use2)
-    # print('delete friend')
-    # delete_friend(use2)
+
 
     print('delete user')
     delete_user()

@@ -39,3 +39,33 @@ def other_add_item(item_name, category, subcategory, user_name, priv_key):
     send([header + ' ' + packet])
     # item_key is returned for testing purposes
     return item_key
+
+def add_friend_test(friend_name, friend_key, step, username, pub_key):
+    # Protocol 102
+    # f = open('frends.json', 'r')
+    # friends = f.read()
+    # friends = json.loads(friends)
+    # f.close()
+    # friends[friend_name] = friend_key
+    # f = open('frends.json', 'w')
+    # friends = json.dumps(friends)
+    # f.write(friends)
+    # f.close()
+
+    header = '@' + username + ':102'
+    packet = {}
+    packet["Target"] = friend_name
+    packet["Key"] = pub_key
+    packet["Step"] = step
+    packet = json.dumps(packet)
+    message = send([header + ' ' + packet])
+    print(message)
+    return 'I accept friend requests'
+
+def delete_friend_test(friend_name, username):
+    # Protocol 103
+    header = '@' + username + ':103'
+    packet = json.dumps({"Target": friend_name})
+    message = send([header + ' ' + packet])
+    print(message)
+    return 'I delete friends'
