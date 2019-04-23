@@ -31,7 +31,6 @@ loadJSON(function (response) {
     addFriend.addEventListener("click", function (e) {
         e.stopPropagation();
         var name = document.getElementById("friend-name").value;
-        console.log(name)
         eel.friend_request(name)(alert("Friend Request Sent to: " + name));
     });
     addFriendForm.appendChild(userName);

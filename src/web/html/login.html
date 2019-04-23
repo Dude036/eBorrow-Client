@@ -34,6 +34,7 @@
     <script>
 
         async function signIn() {
+            console.log('calling eels');
             await eel.send_all()();
             await eel.send_message()();
             await eel.send_exchange()();

@@ -1,3 +1,6 @@
+import eel
+
+@eel.expose
 def get_username():
     f = open("username.txt", "r")
     user_name = f.read()
