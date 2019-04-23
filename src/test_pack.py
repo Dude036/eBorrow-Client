@@ -30,7 +30,7 @@ def other_add_item(item_name, category, subcategory, user_name, priv_key):
         "Name": item_name,
         "Groups": [],
         "Type Info": {},
-        "Image": '',
+        "Image": 'https://source.unsplash.com/random',
         "User Tags": [],
     }
     item_key = create_item_key(item)

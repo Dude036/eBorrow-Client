@@ -90,7 +90,7 @@ def delete_item(item_key):
 
 
 @eel.expose
-def add_item(item_name, category, subcategory, groups, type, user_tag):
+def add_item(item_name, category, subcategory, groups, type, image, user_tag):
     # Protocol 3
     # TODO may want to add a send all or send some function for own stuff after this call
     username = get_username()
@@ -103,7 +103,7 @@ def add_item(item_name, category, subcategory, groups, type, user_tag):
         "Name": item_name,
         "Groups": [],
         "Type Info": {},
-        "Image": '',
+        "Image": image,
         "User Tags": [],
     }
     groups = groups.split(" ")
@@ -420,6 +420,7 @@ if __name__ == '__main__':
     key2 = add_item('another great flick', 'Entertainment', 'Movie', 'men', 'it is in good condition', 'action')
     print('send all')
     send_all()
+
     print('delete item')
     delete_item(key1)
     delete_item(key2)
@@ -441,6 +442,7 @@ if __name__ == '__main__':
     send_exchange()
     send_pending_exchanges()
     send_pending_friends()
+
 
     print('delete user')
     delete_user()

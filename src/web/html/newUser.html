@@ -31,12 +31,11 @@
     </div>
 
     <script>
-        function createUser() {
+        async function createUser() {
+            //eel.delete_user()();
             var username = document.getElementById('username').value;
-            time = eel.getTime()();
-            console.log(time);
             var worked = false;
-            worked = eel.new_user(username)();
+            worked = await eel.new_user(username)();
             if(worked) {
                 console.log('It Worked!!!');
                 document.location.href = "theirStuff.html";

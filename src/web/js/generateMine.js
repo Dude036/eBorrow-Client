@@ -26,7 +26,7 @@ loadJSON(function (response) {
     addItem.innerHTML = "Add New Item";
     addItem.addEventListener("click", function (e) {
         e.stopPropagation();
-        alert("Navigate to New Item Page");
+        window.location = 'newItem.html';
     });
     addItemWrapper.appendChild(addItem);
     itemsContainer.appendChild(addItemWrapper);
