@@ -23,7 +23,7 @@
         <script>
             async function getName() {
                 userName = await eel.get_username()();
-                document.getElementById('userName').innerHTML = userName;
+                document.getElementById('userName').innerHTML = "My Username: " + userName;
             }
             window.onload = getName;
         </script>

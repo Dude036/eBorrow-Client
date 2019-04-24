@@ -23,7 +23,7 @@ loadJSON(function (response) {
 
     for (var prop in jsonresponse) {
         if (jsonresponse.hasOwnProperty(prop)) {
-            var item = util.createItem(jsonresponse[prop]);
+            var item = util.createItem(jsonresponse[prop], false, prop);
             itemsContainer.appendChild(item);
         }
     }
