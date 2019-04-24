@@ -11,7 +11,7 @@ function makeDiv(className = "") {
     return div;
 }
 
-function createItem(jsonItem, mine=false) {
+function createItem(jsonItem, mine=false, hash) {
     var itemWrapper = makeDiv('item-wrapper');
     var itemWrapperLeft = makeDiv('item-wrapper-left');
     var itemImage = document.createElement('img');
@@ -48,7 +48,7 @@ function createItem(jsonItem, mine=false) {
         itemRequest.innerHTML = "Edit";
         itemRequest.addEventListener("click", function (e) {
             e.stopPropagation();
-            alert("Go to Edit Item Page");
+            alert("Would go to Edit Item Page, It is basically just a delete then add new one.");
         });
         itemWrapperRight.appendChild(itemRequest);
     } else {
@@ -57,6 +57,7 @@ function createItem(jsonItem, mine=false) {
         itemRequest.innerHTML = "Request";
         itemRequest.addEventListener("click", function (e) {
             e.stopPropagation();
+            //eel.item_request(hash, jsonItem["Permanent Owner"])();
             alert("Item Requested");
         });
         itemWrapperRight.appendChild(itemRequest);
@@ -172,4 +173,12 @@ async function reloadProgram() {
     location.reload();
 }
 
-export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem, createInput, reloadProgram };
+function getDateString(currentDate) {
+    var date = currentDate.getDate();
+    var month = currentDate.getMonth();
+    var year = currentDate.getFullYear();
+    var monthDateYear = (month + 1) + "/" + date + "/" + year;
+    return monthDateYear;
+}
+
+export { makeDiv, createItem, filterBySearch, setCurrentDB, createLightBox, displayItem, createInput, reloadProgram, getDateString };

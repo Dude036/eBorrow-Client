@@ -1,0 +1,39 @@
+.exchanges-container {
+    grid-column: 2;
+    padding: 20px;
+    border-left: 2px solid #31E89F;
+    min-height: 300px;
+    font-size: 1.8rem;
+}
+
+.exchange-request {
+    position: relative;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    margin: 10px 0 0 10px;
+    padding: 5px;
+    height: 150px;
+    border-radius: 8px;
+    background-color: rgb(238, 238, 238);
+}
+
+.exchange-request-line {
+    padding: 5px;
+}
+
+.open {
+    position: absolute;
+    bottom: 10px;
+    right: 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: rgb(39, 187, 128);
+}
+.closed {
+    position: absolute;
+    bottom: 10px;
+    right: 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: rgba(78, 82, 88, 0.75);
+}

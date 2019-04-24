@@ -1,0 +1,160 @@
+.notif-container {
+    grid-column: 2;
+    padding: 20px;
+    border-left: 2px solid #31E89F;
+    min-height: 300px;
+    display: grid;
+    grid-template-columns: 600px 360px;
+}
+
+.notif-exchanges-container {
+    text-align: center;
+    font-size: 1.8rem;
+    grid-column: 1/2;
+}
+
+.exchange-request {
+    position: relative;
+    text-align: left;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    margin: 10px 0 0 10px;
+    padding: 5px;
+    height: 150px;
+    border-radius: 8px;
+    background-color: rgb(238, 238, 238);
+}
+
+.exchange-request-line {
+    padding: 5px;
+}
+
+.exchange-request-accept {
+    position: absolute;
+    bottom: 8px;
+    right: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    border-radius: 5em;
+    font-weight: 900;
+    color: #fff;
+    background: linear-gradient(to right, #31E89F, #31E8E8 );
+    border: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    transition: all 0.1s ease-in-out;
+}
+
+.exchange-request-accept:hover {
+    cursor: pointer;
+    transform: scale(1.07);
+}
+.exchange-request-accept:focus {
+    outline: none;
+}
+
+.exchange-request-deny {
+    position: absolute;
+    bottom: 13px;
+    right: 105px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    border-radius: 5em;
+    font-weight: 900;
+    color: #fff;
+    background-color: rgb(165, 165, 165);
+    border: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    transition: all 0.1s ease-in-out;
+}
+
+.exchange-request-deny:hover {
+    cursor: pointer;
+    transform: scale(1.07);
+}
+.exchange-request-deny:focus {
+    outline: none;
+}
+
+.notif-friends-container {
+    text-align: center;
+    font-size: 1.8rem;
+    grid-column: 2/-1;
+}
+
+.friend-request {
+    position: relative;
+    text-align: left;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    margin: 10px 0 0 10px;
+    padding: 5px;
+    height: 150px;
+    border-radius: 8px;
+    background-color: rgb(238, 238, 238);
+}
+
+.friend-request-line {
+    padding: 5px;
+}
+
+.friend-request-accept {
+    position: absolute;
+    bottom: 8px;
+    right: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    border-radius: 5em;
+    font-weight: 900;
+    color: #fff;
+    background: linear-gradient(to right, #31E89F, #31E8E8 );
+    border: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    transition: all 0.1s ease-in-out;
+}
+
+.friend-request-accept:hover {
+    cursor: pointer;
+    transform: scale(1.07);
+}
+.friend-request-accept:focus {
+    outline: none;
+}
+
+.friend-request-deny {
+    position: absolute;
+    bottom: 13px;
+    right: 105px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    border-radius: 5em;
+    font-weight: 900;
+    color: #fff;
+    background-color: rgb(165, 165, 165);
+    border: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    transition: all 0.1s ease-in-out;
+}
+
+.friend-request-deny:hover {
+    cursor: pointer;
+    transform: scale(1.07);
+}
+.friend-request-deny:focus {
+    outline: none;
+}

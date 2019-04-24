@@ -105,6 +105,7 @@ def add_item(item_name, category, subcategory, groups, type, image, user_tag):
         "Type Info": {},
         "Image": image,
         "User Tags": [],
+        "Available": true,
     }
     groups = groups.split(" ")
     for i in groups:
